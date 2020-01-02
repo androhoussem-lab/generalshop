@@ -41,3 +41,6 @@ Route::get('/reviews' , function (){
 });
 Route::get('units-test','DataImportController@importUnit');
 */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
