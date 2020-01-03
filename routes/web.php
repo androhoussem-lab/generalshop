@@ -17,6 +17,10 @@ Route::get('/', function () {
 Route::get('test-email',function (){
     return 'hello';
 })->middleware(['auth' , 'email_verified']);
+Route::get('tag-test',function (){
+    $product = \App\Product::find(1);
+    return $product->tags;
+});
 
 
 
