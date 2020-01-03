@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('test-email',function (){
+    return 'hello';
+})->middleware(['auth' , 'email_verified']);
 
 
 
