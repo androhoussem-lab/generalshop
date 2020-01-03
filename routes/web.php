@@ -17,10 +17,19 @@ Route::get('/', function () {
 Route::get('test-email',function (){
     return 'hello';
 })->middleware(['auth' , 'email_verified']);
+
 Route::get('tag-test',function (){
     $product = \App\Product::find(1);
     return $product->tags;
 });
+
+Route::get('role-test',function(){
+    $user = \App\User::find(502);
+    return $user->roles;
+});
+Route::get('welcome',function (){
+    return 'welcome page';
+})->middleware(['auth' , 'user_is_supporter']);
 
 
 
