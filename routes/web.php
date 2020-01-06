@@ -14,6 +14,50 @@
 Route::get('/', function () {
     return view('welcome');
 });
+/* from laravel documentations
+Route::middleware(['first', 'second'])->group(function () {
+    Route::get('/', function () {
+        // Uses first & second Middleware
+    });
+
+    Route::get('user/profile', function () {
+        // Uses first & second Middleware
+    });
+});
+
+*/
+Route::middleware(['auth','user_is_admin'])->group(function(){
+    //units
+    Route::get('units' , 'UnitController@index')->name('units');
+    //categories
+    Route::get('categories' , 'CategoryController@index')->name('categories');
+    //products
+    Route::get('products' , 'ProductController@index')->name('products');
+    //tags
+
+    //payments
+    //orders
+    //shipment
+
+    //countries
+    //cities
+    //states
+
+
+
+    //reviews
+    //tickets
+
+    //roles
+
+
+});
+
+/*
+Route::group(['auth' , 'user_is_admin'], function(){
+    Route::get('add-unit' , 'UnitController@showAdd')->name('new-unit');
+});
+/*
 Route::get('test-email',function (){
     return 'hello';
 })->middleware(['auth' , 'email_verified']);
@@ -30,15 +74,6 @@ Route::get('role-test',function(){
 Route::get('welcome',function (){
     return 'welcome page';
 })->middleware(['auth' , 'user_is_supporter']);
-
-
-
-
-
-
-
-
-/*
 Route::get('cities',function (){
     return \App\City::with(['state','country'])->paginate(5);
 });
