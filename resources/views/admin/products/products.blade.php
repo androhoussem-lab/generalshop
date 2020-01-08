@@ -9,11 +9,11 @@
                     <div class="card-body">
                         <div class="row">
                            @foreach($products as $product)
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="alert alert-primary" role="alert">
                                         <h5>{{$product->title}}</h5>
                                         <p>{{$product->category->name}}</p>
-                                        <p>{{$product->price}}$</p>
+                                        <p>{{$currency_code}}{{$product->price}}</p>
                                         {!! ( count( $product->images ) > 0 ) ? '<img class="img-thumbnail card-img" src="'. $product->images[0]->url .'">' : '' !!}
                                     </div>
                                 </div>

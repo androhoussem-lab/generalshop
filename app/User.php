@@ -62,7 +62,13 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany(Role::class);
     }
+    public function tickets(){
+        return $this->hasMany(Ticket::class,'user_id' , 'id');
+    }
 
+    public function formatName(){
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
 
 

@@ -58,11 +58,29 @@
                                     <a class="dropdown-item" href="{{ route('categories') }}">
                                         {{__('categories')}}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('countries') }}">
+                                        {{__('countries')}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('cities') }}">
+                                        {{__('cities')}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('states') }}">
+                                        {{__('states')}}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('products') }}">
                                         {{__('products')}}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('reviews') }}">
+                                        {{__('reviews')}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('tickets') }}">
+                                        {{__('tickets')}}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('units') }}">
                                         {{__('units')}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('tags') }}">
+                                        {{__('Tags')}}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

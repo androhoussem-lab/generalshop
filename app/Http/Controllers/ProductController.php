@@ -9,10 +9,11 @@ class ProductController extends Controller
 {
     //
     public function index(){
-        $products = Product::with('category','images')->paginate(16);
-
+        $products = Product::with('category','images')->paginate(env('PAGINATION_COUNT'));
+        $currency = env('CURRENCY_CODE' , '$');
         return view('admin.products.products')->with([
-            'products' => $products
+            'products' => $products,
+            'currency_code' => $currency
         ]);
     }
 }

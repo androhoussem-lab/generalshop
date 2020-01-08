@@ -34,19 +34,25 @@ Route::middleware(['auth','user_is_admin'])->group(function(){
     //products
     Route::get('products' , 'ProductController@index')->name('products');
     //tags
+    Route::get('tags','TagController@index')->name('tags');
 
     //payments
     //orders
     //shipment
 
     //countries
+    Route::get('countries' , 'CountryController@index')->name('countries');
     //cities
+    Route::get('cities' , 'CityController@index')->name('cities');
     //states
+    Route::get('states' , 'StateController@index')->name('states');
 
 
 
     //reviews
+    Route::get('reviews' , 'ReviewController@index')->name('reviews');
     //tickets
+    Route::get('tickets' , 'TicketController@index')->name('tickets');
 
     //roles
 

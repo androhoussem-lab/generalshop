@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
@@ -14,7 +15,10 @@ class Review extends Model
         return $this->belongsTo(User::class,'user_id' , 'id');
     }
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class , 'product_id' , 'id');
+    }
+    public function formatTimeForHuman(){
+        return  Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans();
     }
     //
 }
