@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/29dbe6a3b0.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -81,6 +82,9 @@
                                     </a>
                                     <a class="dropdown-item" href="{{ route('tags') }}">
                                         {{__('Tags')}}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('roles') }}">
+                                        {{__('roles')}}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

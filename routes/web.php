@@ -55,6 +55,7 @@ Route::middleware(['auth','user_is_admin'])->group(function(){
     Route::get('tickets' , 'TicketController@index')->name('tickets');
 
     //roles
+    Route::get('roles' , 'RoleController@index')->name('roles');
 
 
 });
