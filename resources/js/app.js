@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+window.$ = window.jQuery = require('jquery/dist/jquery');
 
 window.Vue = require('vue');
 
@@ -30,3 +31,4 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
