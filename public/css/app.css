@@ -11365,3 +11365,21 @@ a.text-dark:focus {
   right: 0;
 }
 
+.buttons-container {
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+}
+
+span.buttons-container span:first-child {
+  margin-right: 5px;
+}
+
+span.buttons-container span:first-child a {
+  color: #19cf1d;
+}
+
+span.buttons-container span:last-child a {
+  color: #c7384c;
+}
+
