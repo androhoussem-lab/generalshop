@@ -16,7 +16,8 @@ class UnitController extends Controller
         $units = Unit::paginate(env('PAGINATION_COUNT')); //paginate(number) ->links
         //units
         return view('admin.units.units')->with([
-            'units' => $units
+            'units' => $units,
+            'showLinks' => true
         ]);
     }
     /*
@@ -25,12 +26,12 @@ class UnitController extends Controller
     private function unitNameExists($unitName){
         $unit = Unit::where(
             'unit_name','=',$unitName
-        )->first();
-        if(!is_null($unit)){
-            Session::flash('message','unit Name('.$unitName.') already exist');
-            return false;
+        )->get();
+        if(count($unit) > 0){
+            Session::flash('message','unit name ('.$unitName.') already exist');
+            return true;
         }
-        return true;
+        return false;
     }
     /*
      * method:check Unit code if exist
@@ -38,12 +39,12 @@ class UnitController extends Controller
     private function unitCodeExists($unitCode){
         $unit = Unit::where(
             'unit_code','=',$unitCode
-        )->first();
-        if(!is_null($unit)){
-            Session::flash('message','unit Code('.$unitCode.') already exist');
-            return false;
+        )->get();
+        if(count($unit) > 0){
+            Session::flash('message','unit Code ('.$unitCode.') already exist');
+            return true;
         }
-        return true;
+        return false;
     }
     /*
      * method:store
@@ -55,10 +56,10 @@ class UnitController extends Controller
         ]);
         $unitName = $request->input('unit_name');
         $unitCode = $request->input('unit_code');
-        if(!$this->unitNameExists($unitName)){
+        if($this->unitNameExists($unitName)){
             return redirect()->back();
         }
-        if(!$this->unitCodeExists($unitCode)){
+        if($this->unitCodeExists($unitCode)){
             return redirect()->back();
         }
         $unit = new Unit();
@@ -97,16 +98,16 @@ class UnitController extends Controller
         ]);
         $unitName = $request->input('unit_name');
         $unitCode = $request->input('unit_code');
-        if(!$this->unitNameExists($unitName)){
+        if($this->unitNameExists($unitName)){
             return redirect()->back();
         }
-        if(!$this->unitCodeExists($unitCode)){
+        if($this->unitCodeExists($unitCode)){
             return redirect()->back();
         }
         $unitID = intval($request->input('unit_id'));
         $unit = Unit::find($unitID);
-        $unit->unit_name = $request->input('unit_name');
-        $unit->unit_code = $request->input('unit_code');
+        $unit->unit_name = $unitName;
+        $unit->unit_code = $unitCode;
         $unit->save();
         Session::flash('message' , 'unit ' .$unit->unit_name.' has been updated');
         return redirect()->back();
@@ -117,5 +118,22 @@ class UnitController extends Controller
     * */
     public function search(Request $request){
         //TODO:make search for given unit
+        $request->validate([
+            'unit-search' => 'required'
+        ]);
+        $searchTerm = $request->input('unit-search');
+        $units = Unit::where(
+            'unit_name' , 'like' , '%' . $searchTerm . '%'
+        )->orWhere(
+         'unit_code' , 'like' , '%'.$searchTerm.'%'
+        )->get(); //my solution paginate directly & without showLinks
+        if(count($units) > 0){
+            return view('admin.units.units')->with([
+                'units' => $units,
+                'showLinks' => false
+            ]);
+        }
+        Session::flash('message','this unit das not exist');
+        return redirect()->route('units');
     }
 }

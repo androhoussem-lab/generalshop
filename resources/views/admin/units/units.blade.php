@@ -1,4 +1,13 @@
 @extends('layouts.app')
+<!--header search -->
+@section('search')
+    <form class="form-inline my-2 my-lg-0" action="{{route('search-units')}}" method="get">
+        @csrf
+        <input class="form-control mr-sm-2" id="unit-search" name="unit-search" type="search" placeholder="Search unit" aria-label="Search" required>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -40,14 +49,14 @@
                                 </div>
                         </div>
                     @endforeach
-                            {{$units->links()}}
+
                         </div>
+                        {{(! is_null($showLinks) && $showLinks)?$units->links():''}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--form for delete unit-->
     <!--model for delete unit-->
         <div class="modal delete-window" tabindex="-1" role="dialog" id="delete-window">
         <div class="modal-dialog" role="document">
@@ -60,7 +69,7 @@
                     <div class="modal-body">
                         <p class="delete-message"></p>
                             <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="unit_id" value="" id="delete-unit-id"> <!--id for using on jquery "$hiddenInput"-->
+                            <input type="hidden" name="unit_id" value="" id="delete-unit-id"> <!--id for using on jquery "$hiddenDeleteInput"-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
@@ -90,7 +99,7 @@
                             <input type="text" class="form-control" id="edit-unit-code" name="unit_code" placeholder="unit code" required>
                         </div>
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="unit_id" value="" id="edit-unit-id"> <!--id for using on jquery "$hiddenInput"-->
+                        <input type="hidden" name="unit_id" value="" id="edit-unit-id"> <!--id for using on jquery "$hiddenUpdateInput"-->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
                             <button type="submit" class="btn btn-primary">UPDATE</button>
