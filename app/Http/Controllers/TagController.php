@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class TagController extends Controller
 {
-    //
+    //TODO:show all
     public function index(){
         $tags = Tag::paginate(env('PAGINATION_COUNT'));
         return view('admin.tags.tags')->with([
@@ -28,7 +28,7 @@ class TagController extends Controller
             return false;
         }
     }
-    //store
+    //TODO:store new
     public function store(Request $request){
         $request->validate([
             'tag_name' => 'required'
@@ -36,26 +36,26 @@ class TagController extends Controller
 
         $tagName = $request->input('tag_name');
         if($this->checkTagName($tagName)){
-            return redirect()->back();
+            return back();
         }
         $newTag = new Tag();
         $newTag->tag = $tagName;
         $newTag->save();
         Session::flash('message','tag (' . $tagName . ') has been added');
-        return redirect()->back();
+        return back();
     }
-   //delete
+    //TODO:delete
     public function delete(Request $request){
         $tagID = $request->input('tag_id');
         if(is_null($tagID) || empty($tagID)){
             Session::flash('message','tag ID is required');
-            return redirect()->back();
+            return back();
         }
         Tag::destroy($tagID);
         Session::flash('message','this tag has been deleted');
-        return redirect()->back();
+        return back();
     }
-    //update
+    //TODO:update
     public function update(Request $request){
         $request->validate([
             'tag_id' => 'required',
@@ -64,18 +64,18 @@ class TagController extends Controller
         $tagId = intval($request->input('tag_id'));
         $tagName = $request->input('tag_name');
         if ($this->checkTagName($tagName)){
-            return redirect()->back();
+            return back();
         }
         $tag = Tag::find($tagId);
         $tag->tag = $tagName;
         $tag->save();
         Session::flash('message','tag (' .$tagName. ') has been updated ');
-        return redirect()->back();
+        return back();
     }
-    //search
+    //TODO:search
     public function search(Request $request){
         $request->validate([
-            'tag-search' => 'required'
+            'tag_search' => 'required'
         ]);
         $tagTerm = $request->input('tag-search');
         $result = Tag::where(

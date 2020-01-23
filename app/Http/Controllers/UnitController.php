@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class UnitController extends Controller
 {
-    /*
-     * method:index
-     * */
+    //TODO:show all
     public function index(){
         //$units = Unit::all();
         $units = Unit::paginate(env('PAGINATION_COUNT')); //paginate(number) ->links
@@ -46,9 +44,7 @@ class UnitController extends Controller
         }
         return false;
     }
-    /*
-     * method:store
-     * */
+    //TODO:store new
     public function store(Request $request){
         $request->validate([
             'unit_name' => 'required',
@@ -68,11 +64,8 @@ class UnitController extends Controller
         $unit->save();
         Session::flash('message' , 'unit ' . $unit->unit_name . ' has been added');
         return redirect()->back();
-        //1:04:00
     }
-    /*
-     * method:delete
-     * */
+    //TODO:delete
     public function delete(Request $request){
         //TODO:check if the id already exist
 
@@ -86,9 +79,7 @@ class UnitController extends Controller
         return redirect()->back();
     }
 
-    /*
-    * method:update
-    * */
+    //TODO:Update
     public function update(Request $request){
         //TODO: update the given unit
         $request->validate([
@@ -113,9 +104,7 @@ class UnitController extends Controller
         return redirect()->back();
     }
 
-    /*
-    * method:search
-    * */
+    //TODO:search
     public function search(Request $request){
         //TODO:make search for given unit
         $request->validate([

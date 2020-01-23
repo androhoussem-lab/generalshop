@@ -2,7 +2,7 @@
 @section('search')
     <form class="form-inline my-2 my-lg-0" action="{{route('search-tags')}}" method="get">
         @csrf
-        <input class="form-control mr-sm-2" id="tag-search" name="tag-search" type="search" placeholder="Search tags" aria-label="Search" required>
+        <input class="form-control mr-sm-2" id="tag-search" name="tag_search" type="search" placeholder="Search tags" aria-label="Search" required>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 @endsection
@@ -16,7 +16,6 @@
                 <form class="row" action="{{route('tags')}}" method="post">
                     @csrf
                     <div class="form-group col-md-6" >
-                        <label for="tag_name">Tag</label>
                         <input type="text" class="form-control" id="tag_name" name="tag_name" placeholder="new tag" required>
                     </div>
                     <div class="form-group col-md-12" >
@@ -26,7 +25,7 @@
                 <div class="row">
                     @foreach($tags as $tag)
                         <div class="col-md-3">
-                            <div class="alert alert-primary" role="alert">
+                            <div class="alert alert-success" role="alert">
                                  <span class="buttons-container">
                                         <span><a class="edit-button"
                                                  data-tagid="{{$tag->id}}"
@@ -36,7 +35,7 @@
                                                  data-tagid="{{$tag->id}}"
                                                  data-tagname="{{$tag->tag}}"
                                             ><i class="fas fa-trash-alt"></i></a></span>
-                                    </span>
+                                 </span>
                                 <p>{{$tag->tag}}</p>
                             </div>
                         </div>
@@ -66,7 +65,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                    <button type="submit" class="btn btn-primary">DELETE</button>
+                    <button type="submit" class="btn btn-danger">DELETE</button>
                 </div>
             </form>
         </div>
@@ -128,6 +127,7 @@
         </script>
     @endif
     <script>
+        //TODO:Delete
         var $deleteButton = $('.delete-button');
         var $deleteWindow = $('#delete-window');
         var $hiddenDeleteInput = $('#delete-tag-id');
@@ -140,11 +140,12 @@
             $deleteMessage.text('are you sure you want to delete ' + dTagName +' ?');
             $hiddenDeleteInput.val(dTagId);
         });
+
+        //TODO:Update
         var $editButton = $('.edit-button');
         var $editWindow = $('#edit-window');
         var $hiddenUpdateInput = $('#edit-tag-id');
         var $inputTagName = $('#edit-tag-name');
-
         $($editButton).click(function (element) {
             element.preventDefault();
             $editWindow.modal('show');

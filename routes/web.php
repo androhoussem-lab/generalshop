@@ -35,6 +35,14 @@ Route::middleware(['auth','user_is_admin'])->group(function(){
     Route::get('search-units' , 'UnitController@search')->name('search-units');
     //categories
     Route::get('categories' , 'CategoryController@index')->name('categories');
+    Route::post('categories' , 'CategoryController@store');
+    Route::delete('categories','CategoryController@delete');
+    Route::put('categories' , 'CategoryController@update');
+    Route::get('search-categories' , 'CategoryController@search')->name('search-categories');
+
+
+
+    Route::get('search-categories','CategoryController@search')->name('search-categories');
     //products
     Route::get('products' , 'ProductController@index')->name('products');
     //tags
@@ -50,20 +58,29 @@ Route::middleware(['auth','user_is_admin'])->group(function(){
 
     //countries
     Route::get('countries' , 'CountryController@index')->name('countries');
+    Route::post('countries' , 'CountryController@store');
+    Route::delete('countries' , 'CountryController@delete');
+    Route::get('search-countries' , 'CountryController@search')->name('search-countries');
     //cities
     Route::get('cities' , 'CityController@index')->name('cities');
     //states
     Route::get('states' , 'StateController@index')->name('states');
 
-
-
     //reviews
     Route::get('reviews' , 'ReviewController@index')->name('reviews');
+    Route::post('reviews' , 'ReviewController@store');
+    Route::delete('reviews' , 'ReviewController@delete');
+    Route::get('search-reviews' , 'ReviewController@search')->name('search-reviews');
     //tickets
     Route::get('tickets' , 'TicketController@index')->name('tickets');
 
     //roles
     Route::get('roles' , 'RoleController@index')->name('roles');
+    Route::post('roles' , 'RoleController@store');
+    Route::delete('roles' , 'RoleController@delete');
+    Route::put('roles' , 'RoleController@update');
+    Route::get('search-roles' , 'RoleController@search')->name('search-roles');
+
 
 
 });

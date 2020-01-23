@@ -32,7 +32,7 @@
                         <div class="row">
                     @foreach($units as $unit)
                         <div class="col-md-3">
-                                <div class="alert alert-primary" role="alert">
+                                <div class="alert alert-secondary" role="alert">
                                     <span class="buttons-container">
                                         <span><a class="edit-button"
                                                  data-unitid="{{$unit->id}}"
@@ -73,7 +73,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                        <button type="submit" class="btn btn-primary">DELETE</button>
+                        <button type="submit" class="btn btn-danger">DELETE</button>
                     </div>
                 </form>
             </div>
