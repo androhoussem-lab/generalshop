@@ -22,13 +22,28 @@
 }
 span.buttons-container span:first-child{
   margin-right: 5px;
-}
-span.buttons-container span:first-child a{
   color: #19cf1d;
+}
+
+span.buttons-container span:last-child a{
+  color: #cf2f5d;
 }
 span.product-header{
   color: #2a9055;
   font-weight: bold;
 }
+a.btn-outline-success{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+a.activate-image-upload{
+  display: block;
+}
+.image-card-upload{
 
+}
+input.image-file-upload{
+  display: none;
+}
 

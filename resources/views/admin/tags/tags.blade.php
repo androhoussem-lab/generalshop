@@ -101,13 +101,13 @@
 <!--Session-->
 @if(Session::has('message'))
     <div class="toast" style="position: absolute; z-index: 99999; top: 5%; right: 5%;">
-        <div class="toast-header" style="background-color: #2a9055;color: #f8f9fa;">
+        <div class="toast-header" style="background-color: purple;color: #FFF;">
             <strong class="mr-auto">Tags</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" style="color: #f7f7f7;">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="toast-body" style="background-color: #38c172;color: #f8f9fa;">
+        <div class="toast-body" style="background-color: deeppink;color: #FFF;">
             {{Session::get('message')}}
         </div>
     </div>

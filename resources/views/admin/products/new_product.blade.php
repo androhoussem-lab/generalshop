@@ -5,14 +5,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {!! (is_null($product))?'New product' : 'Update product <span class="product-header">' .$product->title.'</span>' !!}
+                    {!! (! is_null($product))?'Update product <span class="product-header">' .$product->title.'</span>':'New product'  !!}
                 </div>
                 <div class="card-body">
-                    <form  action="{{route('update-product')}}" method="post">
+                    <form  action="{{( ! is_null($product))?route('update-product'):route('new-product')}}" method="post">
                         @csrf
                         @if(! is_null($product))
                             <input type="hidden" name="_method" value="PUT">
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="product_id" id="product-id" value="{{$product->id}}">
                         @endif
                         <div class="form-group col-md-8" >
                             <label for="product_title">Title</label>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group col-md-8" >
                             <label for="category">Category</label>
-                            <select class="form-control" id="category" required>
+                            <select class="form-control" id="category" name="category" required>
                                 <option>select a category</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}"
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group col-md-8" >
                             <label for="unit">Unit</label>
-                            <select class="form-control" id="unit" required>
+                            <select class="form-control" name="unit" id="unit" required>
                                 <option>select a unit</option>
                                 @foreach($units as $unit)
                                     <option value="{{$unit->id}}"
@@ -45,28 +45,48 @@
                         </div>
                         <div class="form-group col-md-8" >
                             <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" value="{{(! is_null($product))?$product->price:''}}" name="price" placeholder="price" required>
+                            <input type="number" step="any" class="form-control" id="price" value="{{(! is_null($product))?$product->price:''}}" name="price" placeholder="price" required>
                         </div>
                         <div class="form-group col-md-8" >
                             <label for="total">Total</label>
-                            <input type="text" class="form-control" id="total" value="{{(! is_null($product))?$product->total:''}}" name="total" placeholder="total" required>
+                            <input type="number"  class="form-control" id="total" value="{{(! is_null($product))?$product->total:''}}" name="total" placeholder="total" required>
                         </div>
                         <div class="form-group col-md-8" >
                             <label for="discount">Discount</label>
-                            <input type="number" class="form-control" id="discount" value="{{(! is_null($product))?$product->discount:0}}" min="0" max="100" name="discount" placeholder="discount" required>
+                            <input type="number" step="any" class="form-control" id="discount" value="{{(! is_null($product))?$product->discount:0}}" min="0" max="100" name="discount" placeholder="discount" required>
                         </div>
 
                         <!--options-->
                         <div class="form-group col-md-12">
-                            <table class="table table-striped" id="option-table"></table>
+                            <table class="table table-bordered" id="option-table"></table>
                             <a class="btn btn-warning add-option-btn" href="#">add option</a>
                         </div>
                         <!--/options-->
-
-                        <div class="form-group col-md-8" >
-                            <button type="submit" class="btn btn-primary">Save new product</button>
+                        <!--images-->
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                @for( $i = 0 ; $i < 6 ; $i++ )
+                                    <div class="col-md-4 col-sm-12 mb-4">
+                                        <div class="card image-card-upload">
+                                            <a href="#" class="activate-image-upload">
+                                                <div class="card-body" style="text-align: center">
+                                                    <p><i class="fas fa-camera-retro"></i></p>
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <input type="file" class="form-control-file image-file-upload" name="product-images[]" id="image-{{$i}}">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
                         </div>
-                        <button type="submit">test</button>
+                        <!--images-->
+                        <div class="form-group col-md-6 offset-md-3" >
+                            <button type="submit" class="btn btn-primary btn-block">Save new product</button>
+                        </div>
                     </form>
 
                 </div>
@@ -85,11 +105,11 @@
                 <div class="modal-body row">
                         <div class="form-group col-md-6" >
                             <label for="add-option-name">option name</label>
-                            <input type="text" class="form-control" id="add-option-name" name="option_name" placeholder="option name" required>
+                            <input type="text" class="form-control" id="option-name" name="option_name" placeholder="option name" required>
                         </div>
                         <div class="form-group col-md-6" >
                             <label for="add-option-value">option value</label>
-                            <input type="text" class="form-control" id="add-option-value" name="option_value" placeholder="option value" required>
+                            <input type="text" class="form-control" id="option-value" name="option_value" placeholder="option value" required>
                         </div>
                         <div class="modal-footer col-md-12">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
@@ -101,32 +121,41 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('scripts')
 <script>
     $(document).ready(function(){
+
         var $optionWindow = $('.option-window');
-        var $addButton = $('.add-option-btn');
-        $($addButton).click(function (element) {
+        var $addOptionButton = $('.add-option-btn');
+        var $imageUploadeButton = $('a.activate-image-upload');
+        var optionNamesRow = '';
+
+        $($addOptionButton).click(function (element) {
             element.preventDefault();
             $optionWindow.modal('show');
 
         });
+
+        /////
         $(document).on('click','.save-option-btn',function (element) {
             element.preventDefault();
             var optionTable = $('#option-table');
-            var $optionName = $('#add-option-name');
-            if ($optionName.val() === ''){
+
+            var $optionName = $('#option-name');
+            if ($optionName.val() === '') {
                 alert('option name is required');
                 return false;
             }
-            var $optionValue = $('#add-option-value');
-            if($optionValue.val() === ''){
+            var $optionValue = $('#option-value');
+            if ($optionValue.val() === '') {
                 alert('option value is required');
                 return false;
             }
-            var tableRow = `
+
+            optionNamesRow = '<input type="hidden" name="options[]" value="' + $optionName.val() + '">'; //color[],size[]
+
+            var optionRow = `
                 <tr>
                     <td>
                         `+$optionName.val()+`
@@ -140,8 +169,10 @@
                     </td>
                 </tr>
             `;
-            optionTable.append(tableRow);
+            optionTable.append(optionRow);
+            optionTable.append(optionNamesRow);
             $optionValue.val('');
+
 
             $('.remove-option').click(function (element) {
                 element.preventDefault();
@@ -149,7 +180,13 @@
             });
 
 
-        })
+
+        });
+        $($imageUploadeButton).click(function (element) {
+            element.preventDefault();
+
+        });
+
     });
 </script>
 @endsection
