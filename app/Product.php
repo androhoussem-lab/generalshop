@@ -6,25 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable=[
-        'title','description','unit','price','total'
+    protected $fillable =[
+
+        'description','unit','price','total'
     ];
-    //
+
     public function images(){
         return $this->hasMany(Image::class);
     }
+
     public function reviews(){
         return $this->hasMany(Review::class);
     }
+
     public function category(){
-        return $this->belongsTo(Category::class ,'category_id' , 'id');
+        return $this->belongsTo(Category::class);
     }
+
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
-    public function unit(){
-        return $this->belongsTo(Unit::class,'unit_id' , 'id');
+
+    public function hasUnit(){
+        return $this->belongsTo(Unit::class,'unit_id','id');
     }
+
     public function jsonOptions(){
         return json_decode($this->options);
     }

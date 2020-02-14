@@ -11395,7 +11395,25 @@ a.activate-image-upload {
   display: block;
 }
 
+.fa-image {
+  font-size: 3em;
+  color: #10e4a2;
+}
+
 input.image-file-upload {
   display: none;
+}
+
+.image-card-upload a.remove-image-upload i {
+  color: #ff2677;
+  font-size: 1.5em;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 99999;
+}
+
+table tr td {
+  text-align: center;
 }
 

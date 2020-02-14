@@ -43,13 +43,15 @@ Route::middleware(['auth','user_is_admin'])->group(function(){
 
 
     //products
-    Route::get('products' , 'ProductController@index')->name('products');
-    Route::get('new-product','ProductController@newProduct')->name('new-product');
-    Route::post('new-product' , 'ProductController@store');
-    Route::get('update-product/{id}','ProductController@newProduct')->name('update-product');
-    Route::put('update-product' , 'ProductController@update')->name('update-product');
+    Route::get ('products', 'productController@index')->name('products');
 
-    Route::delete('products/{id}' , 'ProductController@delete');
+    Route::get ('new-product', 'productController@newProduct')->name('new-product');
+    Route::post ('new-product', 'productController@store');
+    Route::Post('delete-image' , 'productController@deleteImage')->name('delete-image');
+    Route::get ('update-product/{id}', 'productController@newProduct')->name('update-product-form');
+    Route::put ('update-product', 'productController@update')->name('update-product');
+
+    Route::delete ('products/{id}', 'productController@delete');
 
     //tags
     Route::get('tags','TagController@index')->name('tags');
