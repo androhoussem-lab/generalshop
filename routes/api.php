@@ -27,9 +27,8 @@ Route::get('countries' , 'Api\CountryController@index');
 Route::get('countries/{id}' , 'Api\CountryController@show');
 Route::get('countries/{id}/states' , 'Api\CountryController@showStates');
 Route::get('countries/{id}/cities' , 'Api\CountryController@showCities');
-Route::get('users' , function (){
-   return \App\Http\Resources\UserFullResource::collection(\App\User::paginate());
-});
+Route::post('auth/register' , 'Api\AuthController@register');
+Route::post('auth/login' , 'Api\AuthController@login');
 Route::group(['auth:api'],function (){
      // get
 });
